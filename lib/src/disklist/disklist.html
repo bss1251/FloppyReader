@@ -1,0 +1,32 @@
+<div>
+    <material-button (click)='document.getElementById("fload").click();' raised id='loadButton'>Load File</material-button>
+    <input hidden="true" type="file" id="fload" (change)="fileLoad($event)"/>
+    <br />
+    <br />
+    <div *ngIf="currDir != null">
+        <material-expansionpanel-set>
+            <material-expansionpanel *ngFor="let item of currDir;let i=index"  [expnaded]="item.isDir || item.isLabel" [name]="item.fname" [disabled]="item.isDir || item.isLabel" [hideExpandedHeader]="item.isDir || item.isLabel" [showSaveCancel]="false" (click)="fRead(i)" >
+                <span value>{{item.isDir?'Directory':item.isLabel?'Volume Label':'File'}}</span>
+                <span>Size: {{item.size}} Bytes</span> <br />
+                <span>Last Modified: {{item.dateTime | date:'medium'}}</span><br /><br />
+                {{fContents}}
+                <div toolbelt *ngIf="!(item.isDir || item.isLabel)">
+                    <table width="100%">
+                        <tr>
+                            <td ></td>
+                            <td width="40px">
+                                <div style="justify-content: flex-end" >
+                                    <a  id="ent_{{i}}">
+                                            <material-icon icon="save"></material-icon>
+                                    </a>                                   
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </material-expansionpanel>
+        </material-expansionpanel-set>
+    </div>
+    <p></p>
+</div>
+
